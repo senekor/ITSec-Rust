@@ -3,8 +3,6 @@ name = "axum-hello-world"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 axum = "0.6"
 serde = { version = "1.0.188", features = ["derive"] }
@@ -16,3 +14,6 @@ sqlx = { version = "0.7.1", features = [
   "sqlite",
 ] }
 tokio = { version = "1.0", features = ["full"] }
+
+[profile.release]
+strip = true
