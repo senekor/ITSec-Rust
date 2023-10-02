@@ -46,5 +46,38 @@ fn HomePage() -> impl IntoView {
     view! {
         <h1>"Welcome to Leptos!"</h1>
         <button on:click=on_click>"Click Me: " {count}</button>
+
+        <br/><br/>
+
+        <XssSafeForm />
     }
 }
+
+#[component]
+fn XssSafeForm() -> impl IntoView {
+    let (user_input, set_user_input) = create_signal(String::new());
+
+    view! {
+        "Search: "
+        <input
+            id="searchbox"
+            type="text"
+            autocomplete="off"
+            bind:value=user_input
+            on:input=move |ev| set_user_input(event_target_value(&ev))
+        />
+        <br/>
+        
+        // echo user input into DOM. XSS vulnerability???
+        { user_input }
+
+        // actual inline JS script for demonstration
+        <script>alert("inline script")</script>
+    }
+}
+
+/*
+copy into input field for demo:
+
+<script>alert("XSS")</script>
+*/
